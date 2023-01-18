@@ -1,0 +1,16 @@
+diff --git a/node_modules/react-native-router-flux/src/Router.js b/node_modules/react-native-router-flux/src/Router.js
+index 6f595e4..2140f74 100644
+--- a/node_modules/react-native-router-flux/src/Router.js
++++ b/node_modules/react-native-router-flux/src/Router.js
+@@ -1,9 +1,10 @@
+ import React from 'react';
+-import { ViewPropTypes, BackHandler, Linking } from 'react-native';
++import {BackHandler, Linking } from 'react-native';
+ import PropTypes from 'prop-types';
+ import NavigationStore from './Store';
+ import defaultStore from './defaultStore';
+ import pathParser from './pathParser';
++import ViewPropTypes from 'deprecated-react-native-prop-types';
+ 
+ class App extends React.Component {
+   static propTypes = {
