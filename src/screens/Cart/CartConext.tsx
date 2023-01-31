@@ -41,6 +41,7 @@ export const CartProvider = memo(({children}: PropsWithChildren<{}>) => {
     newProducts => {
       setProducts(newProducts);
       updateCart({products: newProducts});
+      console.log('updateCart');
     },
     [updateCart],
   );

@@ -41,8 +41,8 @@ export const convertObjectToForm = (params: any) => {
   }
 };
 class FetchInstance {
-  api_url = '';
-  company_code = '';
+  api_url = 'https://gstest.olbius.com';
+  company_code = 'gstest.olbius.com';
   current_channel: ICurrentSalesShiftResponse | undefined = undefined;
   access_token = '';
   api_key = '';

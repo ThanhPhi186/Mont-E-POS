@@ -22,12 +22,9 @@ const SDynamicInput = styled(DynamicInput)`
 const SButtonBottom = styled(ButtonBottom)``;
 
 function CompanyRegister({customer}: {customer: ICustomerDetail}) {
-  const [customerName, setCustomerName] = useState(customer?.fullName ?? '');
+  const [username, setUserName] = useState('');
+  const [pwd, setPwd] = useState('');
   const [phone, setPhone] = useState(customer?.telecomNumber ?? '');
-  const [tarAddress, setTarAddress] = useState(customer?.postalAddress ?? '');
-  const [address1, setAddress1] = useState('');
-
-  const [address2, setAddress2] = useState('');
 
   const [errorMess, setErrorMess] = useState('');
 
@@ -60,10 +57,21 @@ function CompanyRegister({customer}: {customer: ICustomerDetail}) {
         }}>
         <Form>
           <SDynamicInput
-            label={'Tên khách hàng'}
-            placeholderStr="Vui lòng nhập"
-            onChangeText={setCustomerName}
-            textInputProps={{value: customerName}}
+            label={'Tên đăng nhập'}
+            placeholderStr="NVB000"
+            onChangeText={setUserName}
+            textInputProps={{
+              value: username,
+              style: {textTransform: 'uppercase'},
+              autoCapitalize: 'characters',
+            }}
+          />
+          <SDynamicInput
+            label={'Mật khẩu'}
+            isPassword
+            placeholderStr="Mật khẩu"
+            onChangeText={setPwd}
+            textInputProps={{value: pwd}}
           />
           <SDynamicInput
             label={'Số điện thoại'}
@@ -72,24 +80,6 @@ function CompanyRegister({customer}: {customer: ICustomerDetail}) {
             required
             errorMessage={errorMess}
             textInputProps={{value: phone, keyboardType: 'number-pad'}}
-          />
-          <SDynamicInput
-            label={'Tỉnh / Thành phố'}
-            placeholderStr="Vui lòng nhập"
-            onChangeText={setTarAddress}
-            textInputProps={{value: tarAddress}}
-          />
-          <SDynamicInput
-            label={'Quận / Huyện'}
-            placeholderStr="Vui lòng nhập"
-            onChangeText={setAddress1}
-            textInputProps={{value: address1}}
-          />
-          <SDynamicInput
-            label={'Xã / Phường'}
-            placeholderStr="Vui lòng nhập"
-            onChangeText={setAddress2}
-            textInputProps={{value: address2}}
           />
         </Form>
       </SScrollView>

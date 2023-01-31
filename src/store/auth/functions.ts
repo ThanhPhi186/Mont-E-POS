@@ -10,7 +10,7 @@ export async function fetchCurrentUser() {
     data: {data: user},
   } = await Fetch.get<{
     data: RawCurrentUser;
-  }>(`@api/users/info`);
+  }>(`@api/user/info`);
   setSetting('me', user);
 }
 

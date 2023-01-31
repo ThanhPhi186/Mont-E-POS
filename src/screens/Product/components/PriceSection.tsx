@@ -1,11 +1,11 @@
 import ScreenWithTitle from '@/components/ScreenWithTitle';
-import { useNavigationParams } from '@/hooks/navigation';
-import { getImageUrl } from '@/services/Fetch';
-import { IFullProduct } from '@/store/product/type';
-import { getLocaleNumber } from '@/utils/convertString';
-import React, { memo, useContext } from 'react';
+import {useNavigationParams} from '@/hooks/navigation';
+import {getImageUrl} from '@/services/Fetch';
+import {IFullProduct} from '@/store/product/type';
+import {getLocaleNumber} from '@/utils/convertString';
+import React, {memo, useContext} from 'react';
 import styled from 'styled-components/native';
-import { ProductContext } from '../ProductContext';
+import {ProductContext} from '../ProductContext';
 
 const Wrapper = styled.View`
   margin-top: 12px;
@@ -20,10 +20,10 @@ const Price = styled.Text`
 `;
 
 const PriceSection = memo(() => {
-  const { selectedConfig } = useContext(ProductContext);
+  const {selectedConfig} = useContext(ProductContext);
   if (!selectedConfig) return null;
   const {
-    priceOut: { price, taxAmount },
+    priceOut: {price, taxAmount},
   } = selectedConfig;
   return (
     <Wrapper>

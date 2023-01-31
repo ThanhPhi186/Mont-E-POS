@@ -154,6 +154,9 @@ const CreateOrder = memo(() => {
 });
 
 const CreateOrderScreen = () => {
+  // useEffect(() => {
+  //   return () => console.log('thoat khoi day');
+  // }, []);
   return (
     <CartProvider>
       <CreateOrder />

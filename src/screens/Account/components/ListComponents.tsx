@@ -3,6 +3,7 @@ import styled from 'styled-components/native';
 import {TouchableOpacityProps, TouchableOpacity} from 'react-native';
 import Icons from '@/Icons';
 import {Actions} from 'react-native-router-flux';
+import Theme from '@/Colors';
 
 const Wrapper = styled.View`
   padding: 12px 24px;
@@ -54,7 +55,7 @@ export const ItemProfileFooter = memo(function ({
       end={end}
       onPress={onItemPress || (() => screen && Actions.push(screen))}
       {...props}>
-      <Icon source={icon} />
+      <Icon style={{tintColor: Theme.blue2}} source={icon} />
       <Title>{title}</Title>
       <Icon source={Icons.icArrowRight24} />
     </ItemRow>

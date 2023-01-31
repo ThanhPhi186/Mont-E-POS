@@ -3,7 +3,14 @@ import PopupSelect from '@/components/PopupSelect';
 import ProductRow from '@/components/ProductRow';
 import SubmitButton from '@/components/SubmitButton';
 import {IFullProduct, IProductCart, IProductConfig} from '@/store/product/type';
-import React, {memo, useCallback, useContext, useRef, useState} from 'react';
+import React, {
+  memo,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import {Actions} from 'react-native-router-flux';
 import styled from 'styled-components/native';
 import {CartContext} from '../CartConext';

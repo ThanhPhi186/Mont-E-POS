@@ -35,6 +35,7 @@ import ListReturnOrderScreen from '@/screens/ReturnOrder/ListReturnOrderScreen';
 import CreateReturnOrderScreen from '@/screens/Order/CreateReturnOrderScreen';
 import ListHoldOrderScreen from '@/screens/HoldOrder/ListHoldOrderScreen';
 import CompanyRegister from '@/screens/Auth/CompanyRegister';
+import {DeleteAccountScreen} from '@/screens/Account/DeleteAccountScreen';
 
 const Routes = React.memo(() => {
   return (
@@ -43,11 +44,11 @@ const Routes = React.memo(() => {
         <Scene key={'root'} path="root">
           <Scene key="preload" component={Preload} hideNavBar={true} />
           <Scene key="login_screen" component={LoginScreen} hideNavBar={true} />
-          <Scene
+          {/* <Scene
             key="input_company_screen"
             component={InputCompanyScreen}
             hideNavBar={true}
-          />
+          /> */}
           <Scene
             key="select_sale_channel"
             component={SelectSaleChannelScreen}
@@ -192,6 +193,11 @@ const Routes = React.memo(() => {
           <Scene
             key="hold_order_screen"
             component={ListHoldOrderScreen}
+            hideNavBar={true}
+          />
+          <Scene
+            key="delete_account_screen"
+            component={DeleteAccountScreen}
             hideNavBar={true}
           />
         </Scene>

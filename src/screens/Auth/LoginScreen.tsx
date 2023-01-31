@@ -140,7 +140,7 @@ const LoginScreen = memo(() => {
   return (
     <ScreenWithTitle hideBack title="Đăng nhập">
       <SScrollView>
-        <Row>
+        {/* <Row>
           <CompanyKey>Mã công ty: {Fetch.company_code}</CompanyKey>
           <ChangeText
             onPress={() => {
@@ -150,7 +150,7 @@ const LoginScreen = memo(() => {
             }}>
             Thay đổi
           </ChangeText>
-        </Row>
+        </Row> */}
         <Form>
           <SDynamicInput
             label={'Tên đăng nhập'}

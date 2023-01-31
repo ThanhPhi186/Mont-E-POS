@@ -2,15 +2,13 @@ import {STORE_KEY} from '@/constants/variableConstant';
 import errorHandler from '@/services/ErrorHandler';
 import Fetch from '@/services/Fetch';
 import {setStringItem} from '@/services/storage/AsyncStorageService';
-import {ILoginResponse, RawCurrentUser} from './type';
+import {ILoginResponse} from './type';
 
 export async function postLogin(username: string, password: string) {
-  console.log('xxxxxx', username, password);
-
   try {
     const {
       data: {userInfo, apiKey, forcePasswordChange},
-    } = await Fetch.post<ILoginResponse>(`@api-common/login`, {
+    } = await Fetch.post<ILoginResponse>('@api-common/login', {
       username,
       password,
     });
@@ -18,9 +16,16 @@ export async function postLogin(username: string, password: string) {
     setStringItem(STORE_KEY.API_KEY, apiKey);
     return {data: userInfo};
   } catch (error: any) {
-    console.log('errrorrr', error);
+    let errorMess = errorHandler(error).getMessage();
+    if (
+      errorMess.includes(
+        `Authenticate failed for user ${username} because account is disabled`,
+      )
+    ) {
+      errorMess = `No account found for username ${username}\nCannot get property 'passwordHashType' on null object\n`;
+    }
 
-    return {message: errorHandler(error).getMessage()};
+    return {message: errorMess};
   }
 }
 
@@ -80,5 +85,23 @@ export async function checkCompany(key: string) {
     return domain;
   } catch (error) {
     return '';
+  }
+}
+
+export async function deleteAccount(username: string, password: string) {
+  try {
+    const {data} = await Fetch.post<{success: boolean}>(
+      '@api/user/deleteAccount',
+      {
+        username,
+        password,
+      },
+    );
+    return data;
+  } catch (error: any) {
+    const message = errorHandler(error).getMessage();
+
+    global.showMessage(message);
+    return {success: false};
   }
 }
