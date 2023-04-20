@@ -44,11 +44,11 @@ const Routes = React.memo(() => {
         <Scene key={'root'} path="root">
           <Scene key="preload" component={Preload} hideNavBar={true} />
           <Scene key="login_screen" component={LoginScreen} hideNavBar={true} />
-          {/* <Scene
+          <Scene
             key="input_company_screen"
             component={InputCompanyScreen}
             hideNavBar={true}
-          /> */}
+          />
           <Scene
             key="select_sale_channel"
             component={SelectSaleChannelScreen}

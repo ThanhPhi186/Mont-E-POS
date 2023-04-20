@@ -39,8 +39,8 @@ const Preload = memo(() => {
   const init = useCallback(async () => {
     console.log('start init');
     const localData = await AsyncStorage.multiGet([
-      // STORE_KEY.CURRENT_DOMAIN,
-      // STORE_KEY.COMPANY_CODE,
+      STORE_KEY.CURRENT_DOMAIN,
+      STORE_KEY.COMPANY_CODE,
       STORE_KEY.CURRENT_CHANNEL,
       STORE_KEY.CURRENT_USER,
       STORE_KEY.CURRENT_USERNAME,

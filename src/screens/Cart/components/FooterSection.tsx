@@ -44,6 +44,8 @@ const FooterSection = memo(() => {
   const {orderTentative, products, customer, setProducts, setCustomer} =
     useContext(CartContext);
 
+  console.log('orderTentative', products);
+
   const disabled = !(products.length > 0);
   const createSuccess = useCallback(order => {
     order && Actions.push('confirm_order_screen', {order});
@@ -51,8 +53,6 @@ const FooterSection = memo(() => {
   }, []);
 
   const onHoldOrder = async orderId => {
-    console.log('aaaaa');
-
     const heldOrder = await holdOrder(orderId);
     global.hideLoading();
     if (heldOrder) {
@@ -64,31 +64,32 @@ const FooterSection = memo(() => {
 
   const onCreateOrder = useCallback(
     async (type: 'hold' | 'create' | 'edit') => {
-      console.log('bbbb', type);
+      console.log('type', type);
 
       global.showLoading();
 
-      const orderItems: IOrderItems[] = products.map(productCart => {
-        const {product, config, count} = productCart;
-
-        return {
-          productId: product.productId,
-          quantity: count,
-          quantityUomId: config.quantityUomId,
-          unitAmountVAT: config.priceOut.price + config.priceOut.taxAmount,
-        };
-      });
+      const orderItems: IOrderItems[] = products.map(
+        ({product, config, count}) => {
+          return {
+            productId: product.productId,
+            quantity: count,
+            quantityUomId: config.quantityUomId,
+            unitAmountVAT: config.priceOut.price + config.priceOut.taxAmount,
+          };
+        },
+      );
 
       const params: ICreateOrderParams = {
         customerPartyId: customer ? customer.partyId : '_NA_',
         productStoreId: Fetch.current_channel?.productStoreId || '',
         orderItems: orderItems,
+        ...(type !== 'create' && {orderId: orderTentative}),
       };
-      if (type === 'edit') {
-        params.orderId = orderTentative;
-      }
+
+      console.log('params', params);
+
       const result =
-        type === 'edit' ? await editOrder(params) : await createOrder(params);
+        type === 'create' ? await createOrder(params) : await editOrder(params);
       if (result) {
         type === 'hold'
           ? onHoldOrder(result.orderId)
@@ -97,7 +98,7 @@ const FooterSection = memo(() => {
         global.hideLoading();
       }
     },
-    [products, customer],
+    [products, customer, orderTentative],
   );
 
   const calculatePrice = () => {
@@ -119,7 +120,7 @@ const FooterSection = memo(() => {
       textCancel: 'Hủy',
       textNext: 'Giữ đơn',
       onNext: () => {
-        orderTentative ? onHoldOrder(orderTentative) : onCreateOrder('hold');
+        onCreateOrder('hold');
       },
     });
   }, [orderTentative]);

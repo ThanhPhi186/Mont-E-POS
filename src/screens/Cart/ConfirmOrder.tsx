@@ -1,4 +1,3 @@
-import CustomerItem from '@/components/CustomerItem';
 import ProductRow from '@/components/ProductRow';
 import ScreenWithTitle from '@/components/ScreenWithTitle';
 import {NormalText} from '@/components/TextCommon';
@@ -9,7 +8,6 @@ import React, {memo, useCallback} from 'react';
 import {StyleSheet} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import styled from 'styled-components/native';
-import {CartProvider} from './CartConext';
 import ConfirmFooter from './components/ConfirmFooter';
 import CustomerInfo from './components/CustomerInfo';
 import PromotionSection from './components/PromotionSection';
@@ -43,8 +41,6 @@ const ConfirmOrder = memo(({order}: {order: IOrderDetail}) => {
     },
     [order],
   );
-
-  console.log('customer', customer);
 
   return (
     <ScreenWithTitle removePadding title="Xác nhận đơn">
@@ -89,11 +85,7 @@ const ConfirmOrder = memo(({order}: {order: IOrderDetail}) => {
 });
 
 const ConfirmOrderScreen = ({order}: {order: IOrderDetail}) => {
-  return (
-    <CartProvider>
-      <ConfirmOrder order={order} />
-    </CartProvider>
-  );
+  return <ConfirmOrder order={order} />;
 };
 
 export default ConfirmOrderScreen;

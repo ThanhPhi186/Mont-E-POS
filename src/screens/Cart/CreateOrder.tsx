@@ -2,7 +2,6 @@ import ScreenWithTitle from '@/components/ScreenWithTitle';
 import {useNavigationParams} from '@/hooks/navigation';
 import {fetchOrderDetail, getTentative, onCancelOrder} from '@/store/order/api';
 import {useCart} from '@/store/order/hook';
-import {IOrderDetail} from '@/store/order/type';
 import {IProductCart} from '@/store/product/type';
 import Emitter from '@/utils/Emitter';
 import _ from 'lodash';
@@ -34,14 +33,8 @@ const TextCancel = styled.Text`
 const SButton = styled.TouchableOpacity``;
 
 const CreateOrder = memo(() => {
-  const {
-    orderTentative,
-    customer,
-    products,
-    setProducts,
-    setCustomer,
-    setOrderTentative,
-  } = useContext(CartContext);
+  const {orderTentative, setProducts, setCustomer, setOrderTentative} =
+    useContext(CartContext);
   const {deleteCart} = useCart();
 
   const {productFromQr} = useNavigationParams<{
@@ -71,6 +64,8 @@ const CreateOrder = memo(() => {
     productFromQr && setProducts(productFromQr);
 
     if (orderId) {
+      console.log('orderId', orderId);
+
       setOrderTentative(orderId);
       const detailOrder = await fetchOrderDetail(orderId);
 
@@ -78,21 +73,20 @@ const CreateOrder = memo(() => {
         !_.isEmpty(detailOrder.customer) && setCustomer(detailOrder.customer);
         if (!productFromQr) {
           const convertProduct = detailOrder.productItems.map(elm => {
-            return {
-              config: elm.configs.find(
-                elmConfig =>
-                  elmConfig.quantityUomId === elm.alternativeQuantityUomId,
-              ),
-              count: elm.alternativeQuantity,
-              product: {
-                baseUomDesc: elm.alternativeQuantityUomDesc,
-                configs: elm.configs,
-                productId: elm.productId,
-                productName: elm.itemDescription,
-                pseudoId: elm.pseudoId,
-                quantityUomId: elm.alternativeQuantityUomId,
-              },
+            const config = elm.configs.find(
+              elmConfig =>
+                elmConfig.quantityUomId === elm.alternativeQuantityUomId,
+            );
+            const product = {
+              baseUomDesc: elm.alternativeQuantityUomDesc,
+              configs: elm.configs,
+              productId: elm.productId,
+              productName: elm.itemDescription,
+              pseudoId: elm.pseudoId,
+              quantityUomId: elm.alternativeQuantityUomId,
             };
+            const count = elm.alternativeQuantity;
+            return {config, product, count};
           });
           setProducts(convertProduct);
         }
@@ -110,7 +104,7 @@ const CreateOrder = memo(() => {
         onCancel();
       },
     });
-  }, []);
+  }, [orderTentative]);
 
   useEffect(() => {
     getOrderTentative();
@@ -118,8 +112,6 @@ const CreateOrder = memo(() => {
 
   useEffect(() => {
     const __sub = Emitter.listen(Emitter.CLEAR_CART, () => {
-      console.log('clearOrder');
-
       clearOrder();
     });
     return () => __sub.remove();
@@ -154,9 +146,6 @@ const CreateOrder = memo(() => {
 });
 
 const CreateOrderScreen = () => {
-  // useEffect(() => {
-  //   return () => console.log('thoat khoi day');
-  // }, []);
   return (
     <CartProvider>
       <CreateOrder />

@@ -94,10 +94,6 @@ const SelectProductScreen = memo(
       getProductsByCate();
     }, [loading, getProductsByCate]);
 
-    const onChangeCate = useCallback((cateid: string) => {
-      setCurrentCate(cateid);
-    }, []);
-
     const onRefresh = useCallback(() => {
       totalItem.current = 0;
       totalPage.current = 1;
@@ -125,10 +121,6 @@ const SelectProductScreen = memo(
             ListFooterComponent={<ListLoading loading={loading} />}
             ListHeaderComponent={
               <>
-                {/* <SelectCategory
-                  selected={currentCate}
-                  onChangeCate={onChangeCate}
-                /> */}
                 <SDynamicInput
                   placeholderStr="Tìm tên sản phẩm"
                   onChangeText={t => (searchName.current = t)}

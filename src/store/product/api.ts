@@ -1,6 +1,6 @@
 import Fetch from '@/services/Fetch';
 import moment from 'moment';
-import {IFullProduct, IProductItem, IProductPriceChange} from './type';
+import {IFullProduct, IProductPriceChange} from './type';
 
 export async function fetchListProduct({
   name,

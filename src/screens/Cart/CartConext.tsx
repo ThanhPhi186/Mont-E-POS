@@ -4,7 +4,7 @@ import {IProductCart} from '@/store/product/type';
 import React, {
   createContext,
   memo,
-  PropsWithChildren,
+  ReactNode,
   useCallback,
   useState,
 } from 'react';
@@ -29,7 +29,7 @@ export const CartContext = createContext<ICartContext>({
   setOrderTentative: doNothing,
 });
 
-export const CartProvider = memo(({children}: PropsWithChildren<{}>) => {
+export const CartProvider = memo(({children}: {children: ReactNode}) => {
   const {cart, updateCart} = useCart();
   const [customer, setCustomer] = useState<ICustomer | undefined>(
     cart.customer,
@@ -41,7 +41,6 @@ export const CartProvider = memo(({children}: PropsWithChildren<{}>) => {
     newProducts => {
       setProducts(newProducts);
       updateCart({products: newProducts});
-      console.log('updateCart');
     },
     [updateCart],
   );
@@ -53,9 +52,9 @@ export const CartProvider = memo(({children}: PropsWithChildren<{}>) => {
     [updateCart],
   );
 
-  const onChangeOrderId = useCallback(newOrderId => {
+  const onChangeOrderId = newOrderId => {
     setOrderTentative(newOrderId);
-  }, []);
+  };
 
   return (
     <CartContext.Provider

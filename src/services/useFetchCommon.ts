@@ -147,7 +147,6 @@ const useFetchCommon = <T>({
     if (!state.isLoading) {
       handleFetchData();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
 
   return {
