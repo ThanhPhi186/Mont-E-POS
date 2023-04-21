@@ -32,7 +32,7 @@ const listNavigation = [
   {
     label: 'Khách hàng',
     iconName: 'ic-home-change',
-    screen: 'select_customer',
+    screen: 'select_customer_screen',
     color: '#E308A6',
   },
 ];

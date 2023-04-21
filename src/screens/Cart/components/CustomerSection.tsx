@@ -42,7 +42,6 @@ const CustomerSection = memo(({disabled = false}: {disabled?: boolean}) => {
       {customer ? (
         <CustomerItem
           disabled={disabled}
-          key={`${customer.checkInOk}${customer.checkOutOk}`}
           item={customer}
           onItemPress={() =>
             Actions.push('select_customer_screen', {onSelectCustomer})

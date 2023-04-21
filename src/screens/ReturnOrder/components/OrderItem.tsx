@@ -100,7 +100,6 @@ const OrderItem = memo(({item}: {item: IReturnOrderListItem}) => {
   const onItemPress = useCallback(async () => {
     global.showLoading();
     const order = await fetchReturnOrderDetail(item.returnId);
-    console.log('fetchReturnOrderDetail', order);
 
     global.hideLoading();
 

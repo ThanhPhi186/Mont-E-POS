@@ -73,7 +73,6 @@ const OrderItem = memo(({item}: {item: IHoldOrderListItem}) => {
   const onItemPress = useCallback(async () => {
     global.showLoading();
     const order = await reOpenOrder(item.orderId);
-    // console.log('fetchReturnOrderDetail', order);
     global.hideLoading();
     order && Actions.push('create_order');
   }, []);

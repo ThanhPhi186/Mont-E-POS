@@ -170,7 +170,6 @@ const ChooseAddress = forwardRef((props: ChooseAddressProps, ref: any) => {
   const initData = async () => {
     const listProvince = await fetchListAddress('VNM');
     const listDistricts = await fetchListAddress(customer?.stateProvinceGeoId);
-    console.log('listDistricts', listDistricts);
 
     const listWards = await fetchListAddress(customer?.countyGeoId);
     const currentProvince = listProvince.find(

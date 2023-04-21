@@ -1,11 +1,11 @@
 import Account from '@/screens/Account';
 import Contact from '@/screens/Contact';
-import SelectCustomerScreen from '@/screens/Customers/SelectCustomerScreen';
 import Home from '@/screens/Home';
 import ShareTab from '@/screens/Share';
 import React from 'react';
 import {Actions, Scene} from 'react-native-router-flux';
 import BottomBar from './MainBottomBar';
+import QRScanScreen from '@/screens/QRScan/QRScanScreen';
 
 const Tabbar = (
   <Scene key="main_tab" tabBarComponent={BottomBar} tabs hideNavBar>
@@ -27,7 +27,7 @@ const Tabbar = (
     />
     <Scene
       key="create_cart"
-      component={SelectCustomerScreen}
+      component={QRScanScreen}
       hideNavBar
       icon={require('@/assets/navigation/icon_tabbar_qr.png')}
       backgroundColor="transparent"

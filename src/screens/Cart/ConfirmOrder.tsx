@@ -4,7 +4,7 @@ import {NormalText} from '@/components/TextCommon';
 import {IOrderDetail} from '@/store/order/type';
 import {LIST_PADDING_BOTTOM} from '@/utils/Tranform';
 import _ from 'lodash';
-import React, {memo, useCallback} from 'react';
+import React, {memo, useCallback, useContext} from 'react';
 import {StyleSheet} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import styled from 'styled-components/native';

@@ -46,6 +46,7 @@ export interface IFullProduct {
   pseudoId: string;
   basePriceVAT: number;
   baseUomDesc: string;
+  product: IProductContent;
 }
 
 export interface IProductCart {

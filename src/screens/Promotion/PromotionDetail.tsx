@@ -1,10 +1,10 @@
 import ListLoading from '@/components/ListLoading';
 import ScreenWithTitle from '@/components/ScreenWithTitle';
-import { fetchPromotionDetail } from '@/store/order/api';
-import { IPromotionDetail } from '@/store/order/type';
+import {fetchPromotionDetail} from '@/store/order/api';
+import {IPromotionDetail} from '@/store/order/type';
 import moment from 'moment';
-import React, { useCallback, useEffect, useState } from 'react';
-import { ScrollView } from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
+import {ScrollView} from 'react-native';
 import styled from 'styled-components/native';
 import PromotionItem from './components/PromotionItem';
 
@@ -30,12 +30,11 @@ const NormalText = styled.Text`
   color: #363636;
 `;
 
-const PromotionDetail = ({ promotionId }: { promotionId: string }) => {
+const PromotionDetail = ({promotionId}: {promotionId: string}) => {
   const [data, setData] = useState<IPromotionDetail | null>(null);
 
   const getData = useCallback(async () => {
     const newData = await fetchPromotionDetail(promotionId);
-    console.log(newData);
     setData(newData);
   }, []);
 
@@ -74,7 +73,7 @@ const PromotionDetail = ({ promotionId }: { promotionId: string }) => {
   );
 };
 
-const PromotionDetailScreen = ({ promotionId }: { promotionId: string }) => (
+const PromotionDetailScreen = ({promotionId}: {promotionId: string}) => (
   <ScreenWithTitle title="Chi tiết ưu đãi">
     <PromotionDetail promotionId={promotionId} />
   </ScreenWithTitle>

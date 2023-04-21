@@ -47,7 +47,6 @@ const Container = memo(({order}: {order: IOrderDetail}) => {
       Actions.push('create_return_order_screen', {order: orderResponse});
     }
   }, []);
-  console.log('aaa', order.customer);
 
   return (
     <Wrapper>

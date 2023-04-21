@@ -1,15 +1,12 @@
 import ScreenWithTitle from '@/components/ScreenWithTitle';
 import {useNavigationParams} from '@/hooks/navigation';
 import {fetchOrderDetail, getTentative, onCancelOrder} from '@/store/order/api';
-import {useCart} from '@/store/order/hook';
-import {IProductCart} from '@/store/product/type';
-import Emitter from '@/utils/Emitter';
 import _ from 'lodash';
-import React, {memo, useCallback, useContext, useEffect} from 'react';
+import React, {useCallback, useContext, useEffect} from 'react';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Actions} from 'react-native-router-flux';
 import styled from 'styled-components/native';
-import {CartContext, CartProvider} from './CartConext';
+import {CartContext} from './CartConext';
 import CustomerSection from './components/CustomerSection';
 import FooterSection from './components/FooterSection';
 import ProductSection from './components/ProductSection';
@@ -32,20 +29,18 @@ const TextCancel = styled.Text`
 `;
 const SButton = styled.TouchableOpacity``;
 
-const CreateOrder = memo(() => {
-  const {orderTentative, setProducts, setCustomer, setOrderTentative} =
-    useContext(CartContext);
-  const {deleteCart} = useCart();
+const CreateOrderScreen = () => {
+  const {
+    orderTentative,
+    setProducts,
+    setCustomer,
+    setOrderTentative,
+    clearOrder,
+  } = useContext(CartContext);
 
   const {productFromQr} = useNavigationParams<{
-    productFromQr: IProductCart[];
+    productFromQr: boolean;
   }>();
-
-  const clearOrder = () => {
-    deleteCart();
-    setProducts([]);
-    setCustomer(undefined);
-  };
 
   const onCancel = async () => {
     if (orderTentative) {
@@ -59,37 +54,35 @@ const CreateOrder = memo(() => {
   };
 
   const getOrderTentative = async () => {
-    clearOrder();
     const orderId = await getTentative();
-    productFromQr && setProducts(productFromQr);
-
     if (orderId) {
-      console.log('orderId', orderId);
-
       setOrderTentative(orderId);
-      const detailOrder = await fetchOrderDetail(orderId);
 
-      if (detailOrder) {
-        !_.isEmpty(detailOrder.customer) && setCustomer(detailOrder.customer);
-        if (!productFromQr) {
-          const convertProduct = detailOrder.productItems.map(elm => {
-            const config = elm.configs.find(
-              elmConfig =>
-                elmConfig.quantityUomId === elm.alternativeQuantityUomId,
-            );
-            const product = {
-              baseUomDesc: elm.alternativeQuantityUomDesc,
-              configs: elm.configs,
-              productId: elm.productId,
-              productName: elm.itemDescription,
-              pseudoId: elm.pseudoId,
-              quantityUomId: elm.alternativeQuantityUomId,
-            };
-            const count = elm.alternativeQuantity;
-            return {config, product, count};
-          });
-          setProducts(convertProduct);
+      if (!productFromQr) {
+        const detailOrder = await fetchOrderDetail(orderId);
+        if (!detailOrder) {
+          return;
         }
+
+        const convertProduct = detailOrder.productItems.map(elm => {
+          const config = elm.configs.find(
+            elmConfig =>
+              elmConfig.quantityUomId === elm.alternativeQuantityUomId,
+          );
+          const product = {
+            baseUomDesc: elm.alternativeQuantityUomDesc,
+            configs: elm.configs,
+            productId: elm.productId,
+            productName: elm.itemDescription,
+            pseudoId: elm.pseudoId,
+            quantityUomId: elm.alternativeQuantityUomId,
+          };
+
+          const count = elm.alternativeQuantity;
+          return {config, product, count};
+        });
+        !_.isEmpty(detailOrder.customer) && setCustomer(detailOrder.customer);
+        setProducts(convertProduct);
       }
     }
   };
@@ -108,13 +101,9 @@ const CreateOrder = memo(() => {
 
   useEffect(() => {
     getOrderTentative();
-  }, []);
-
-  useEffect(() => {
-    const __sub = Emitter.listen(Emitter.CLEAR_CART, () => {
+    return () => {
       clearOrder();
-    });
-    return () => __sub.remove();
+    };
   }, []);
 
   const renderRightComponent = () => {
@@ -142,14 +131,6 @@ const CreateOrder = memo(() => {
       </SScrollView>
       <FooterSection />
     </ScreenWithTitle>
-  );
-});
-
-const CreateOrderScreen = () => {
-  return (
-    <CartProvider>
-      <CreateOrder />
-    </CartProvider>
   );
 };
 

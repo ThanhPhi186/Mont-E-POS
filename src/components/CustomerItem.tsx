@@ -59,7 +59,7 @@ const CustomerItem = memo(
           <Column>
             <Name>{item.fullName}</Name>
             <Address numberOfLines={1}>{item.fullAddress}</Address>
-            <Address>{item.telecomNumber}</Address>
+            <Address>{item.telecomNumber || item.contactNumber}</Address>
           </Column>
           <RightIcon
             source={type === 'edit' ? Icons.icEdit : Icons.icArrowRight24}

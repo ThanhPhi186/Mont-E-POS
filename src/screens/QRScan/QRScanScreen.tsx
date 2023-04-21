@@ -22,7 +22,7 @@ import {
   useCameraDevices,
 } from 'react-native-vision-camera';
 import {useScanBarcodes, BarcodeFormat} from 'vision-camera-code-scanner';
-import {height, width} from '@/global';
+import {_, height, width} from '@/global';
 import BarcodeView from './BarcodeView';
 
 const Row = styled.View`
@@ -96,6 +96,7 @@ const BtnSelect = styled.TouchableOpacity`
   border-radius: 12px;
   align-items: center;
   justify-content: center;
+  opacity: ${props => (props.disabled ? 0.5 : 1)};
 `;
 
 const CartCountLabel = styled.Text`
@@ -159,12 +160,9 @@ const QRScan = () => {
   const scrollRef = useRef<ScrollView>(null);
 
   const getScanData = async qrCode => {
-    console.log('qrCode', qrCode);
-
     global.showLoading();
     const {data: dataProducts} = await fetchListProduct({
       name: qrCode,
-      // name: '2000133637423',
     });
     global.hideLoading();
 
@@ -282,63 +280,65 @@ const QRScan = () => {
             zoom={device?.neutralZoom ?? 1}
           />
         )}
-        <SFooter>
-          <CartWrapper
-            onPress={() => {
-              Actions.push('create_order', {productFromQr: products});
-            }}>
-            <Image source={Icons.icCart} />
-            {products.length > 0 && (
-              <CartCountView>
-                <CartCountLabel>{products.length}</CartCountLabel>
-              </CartCountView>
+        {(!_.isEmpty(products) || productQR) && (
+          <SFooter>
+            <CartWrapper
+              onPress={() => {
+                Actions.push('create_order', {productFromQr: true});
+              }}>
+              <Image source={Icons.icCart} />
+              {products.length > 0 && (
+                <CartCountView>
+                  <CartCountLabel>{products.length}</CartCountLabel>
+                </CartCountView>
+              )}
+            </CartWrapper>
+            {productQR ? (
+              <ProductWrapper>
+                <TxtNameProduct numberOfLines={1}>
+                  {productQR.productName}
+                </TxtNameProduct>
+                <SWrapperChangeCount>
+                  <TxtPrice>
+                    {getLocaleNumber(
+                      productQR.configs?.[0]
+                        ? productQR.configs?.[0].priceOut.price +
+                            productQR.configs?.[0].priceOut.taxAmount
+                        : 0,
+                    )}
+                    đ
+                  </TxtPrice>
+                  <Row>
+                    <Button
+                      hitSlop={{top: 15, left: 15, bottom: 15}}
+                      onPress={() =>
+                        tempCount > 1 && setTempCount(tempCount - 1)
+                      }>
+                      <IconCount source={Icons.icCountReduce} />
+                    </Button>
+                    <CountInput
+                      hitSlop={{top: 15, bottom: 15}}
+                      selectTextOnFocus
+                      value={tempCount + ''}
+                      keyboardType="numeric"
+                      onChangeText={onChangeCountByInput}
+                    />
+                    <Button
+                      hitSlop={{top: 15, right: 15, bottom: 15}}
+                      onPress={() => setTempCount(tempCount + 1)}>
+                      <IconCount source={Icons.icCountRaise} />
+                    </Button>
+                  </Row>
+                </SWrapperChangeCount>
+              </ProductWrapper>
+            ) : (
+              <SView />
             )}
-          </CartWrapper>
-          {productQR ? (
-            <ProductWrapper>
-              <TxtNameProduct numberOfLines={1}>
-                {productQR.productName}
-              </TxtNameProduct>
-              <SWrapperChangeCount>
-                <TxtPrice>
-                  {getLocaleNumber(
-                    productQR.configs?.[0]
-                      ? productQR.configs?.[0].priceOut.price +
-                          productQR.configs?.[0].priceOut.taxAmount
-                      : 0,
-                  )}
-                  đ
-                </TxtPrice>
-                <Row>
-                  <Button
-                    hitSlop={{top: 15, left: 15, bottom: 15}}
-                    onPress={() =>
-                      tempCount > 1 && setTempCount(tempCount - 1)
-                    }>
-                    <IconCount source={Icons.icCountReduce} />
-                  </Button>
-                  <CountInput
-                    hitSlop={{top: 15, bottom: 15}}
-                    selectTextOnFocus
-                    value={tempCount + ''}
-                    keyboardType="numeric"
-                    onChangeText={onChangeCountByInput}
-                  />
-                  <Button
-                    hitSlop={{top: 15, right: 15, bottom: 15}}
-                    onPress={() => setTempCount(tempCount + 1)}>
-                    <IconCount source={Icons.icCountRaise} />
-                  </Button>
-                </Row>
-              </SWrapperChangeCount>
-            </ProductWrapper>
-          ) : (
-            <SView />
-          )}
-          <BtnSelect onPress={selectProduct}>
-            <Image source={Icons.icSelectedWhite} />
-          </BtnSelect>
-        </SFooter>
+            <BtnSelect disabled={!productQR} onPress={selectProduct}>
+              <Image source={Icons.icSelectedWhite} />
+            </BtnSelect>
+          </SFooter>
+        )}
         <SHeader>
           <TouchableOpacity onPress={() => Actions.pop()}>
             <Image source={Icons.icBack} />
@@ -356,11 +356,7 @@ const QRScan = () => {
 };
 
 const QRScanScreen = () => {
-  return (
-    <CartProvider>
-      <QRScan />
-    </CartProvider>
-  );
+  return <QRScan />;
 };
 
 export default QRScanScreen;

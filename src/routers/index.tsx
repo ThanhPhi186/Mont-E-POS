@@ -16,19 +16,9 @@ import OrderSuccessScreen from '@/screens/Cart/OrderSuccess';
 import PromotionDetail from '@/screens/Promotion/PromotionDetail';
 import ListPromotionScreen from '@/screens/Promotion/ListPromotionScreen';
 import AddCustomerScreen from '@/screens/Customers/AddCustomerScreen';
-import RecommendedCustomerScreen from '@/screens/Customers/RecommendedCustomerScreen';
 import ListOrderScreen from '@/screens/Order/ListOrderScreen';
-import RecommendedDetailScreen from '@/screens/Customers/RecommendedDetailScreen';
 import OrderDetailScreen from '@/screens/Order/OrderDetailScreen';
-import ListProductScreen from '@/screens/Product/ListProductScreen';
-import ListPriceChangeScreen from '@/screens/PriceChange/ListPriceChangeScreen';
-import StatisticRevenue from '@/screens/StatisticRevenue';
-import StatisticDetail from '@/screens/StatisticRevenue/StatisticDetail';
-import CheckInOut from '@/screens/Checkin-out/CheckInOut';
 import ChangePasswordScreen from '@/screens/Account/ChangePassword';
-import OrderCommissionScreen from '@/screens/Commission/OrderCommissionScreen';
-import DetailCustomerScreen from '@/screens/Customers/DetailCustomerScreen';
-import ProductDetailScreen from '@/screens/Product/ProductDetailScreen';
 import QRScanScreen from '@/screens/QRScan/QRScanScreen';
 import ReturnOrderDetailScreen from '@/screens/ReturnOrder/ReturnOrderDetailScreen';
 import ListReturnOrderScreen from '@/screens/ReturnOrder/ListReturnOrderScreen';
@@ -63,12 +53,9 @@ const Routes = React.memo(() => {
         </Scene>
         <Scene key={'main'} path="main">
           {Tabbar}
-          <Scene
-            key="select_customer"
-            component={SelectCustomerScreen}
-            hideNavBar={true}
-          />
+
           <Scene key="create_order" component={CreateOrder} hideNavBar={true} />
+          <Scene key="qr_scan" component={QRScanScreen} hideNavBar={true} />
           <Scene
             key="select_product_screen"
             component={SelectProductScreen}
@@ -109,67 +96,19 @@ const Routes = React.memo(() => {
             component={AddCustomerScreen}
             hideNavBar={true}
           />
-          <Scene
-            key="recommended_customer_screen"
-            component={RecommendedCustomerScreen}
-            hideNavBar={true}
-          />
-          <Scene
-            key="recommended_detail_screen"
-            component={RecommendedDetailScreen}
-            hideNavBar={true}
-          />
+
           <Scene
             key="order_detail_screen"
             component={OrderDetailScreen}
             hideNavBar={true}
           />
-          <Scene
-            key="list_product_screen"
-            component={ListProductScreen}
-            hideNavBar={true}
-          />
-          <Scene
-            key="list_change_price_screen"
-            component={ListPriceChangeScreen}
-            hideNavBar={true}
-          />
-          <Scene
-            key="statistic_revenue_screen"
-            component={StatisticRevenue}
-            hideNavBar={true}
-          />
-          <Scene
-            key="statistic_detail_screen"
-            component={StatisticDetail}
-            hideNavBar={true}
-          />
-          <Scene
-            key="checkIn_checkOut"
-            component={CheckInOut}
-            hideNavBar={true}
-          />
+
           <Scene
             key="change_password_screen"
             component={ChangePasswordScreen}
             hideNavBar={true}
           />
-          <Scene
-            key="order_commission"
-            component={OrderCommissionScreen}
-            hideNavBar={true}
-          />
-          <Scene
-            key="detail_customer"
-            component={DetailCustomerScreen}
-            hideNavBar={true}
-          />
-          <Scene
-            key="product_detail_screen"
-            component={ProductDetailScreen}
-            hideNavBar={true}
-          />
-          <Scene key="qr_scan" component={QRScanScreen} hideNavBar={true} />
+
           <Scene
             key="list_return_order_screen"
             component={ListReturnOrderScreen}

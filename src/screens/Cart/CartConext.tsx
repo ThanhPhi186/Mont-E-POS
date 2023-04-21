@@ -1,13 +1,6 @@
 import {ICustomer} from '@/store/customers/types';
-import {useCart} from '@/store/order/hook';
 import {IProductCart} from '@/store/product/type';
-import React, {
-  createContext,
-  memo,
-  ReactNode,
-  useCallback,
-  useState,
-} from 'react';
+import React, {createContext, memo, ReactNode, useState} from 'react';
 
 interface ICartContext {
   orderTentative?: string;
@@ -15,7 +8,8 @@ interface ICartContext {
   products: IProductCart[];
   setProducts: (list: any) => void;
   setCustomer: (customer: any) => void;
-  setOrderTentative: (orderId: string) => void;
+  setOrderTentative: (orderId?: string) => void;
+  clearOrder: () => void;
 }
 
 const doNothing = () => {};
@@ -27,33 +21,22 @@ export const CartContext = createContext<ICartContext>({
   setProducts: doNothing,
   setCustomer: doNothing,
   setOrderTentative: doNothing,
+  clearOrder: () => {},
 });
 
 export const CartProvider = memo(({children}: {children: ReactNode}) => {
-  const {cart, updateCart} = useCart();
-  const [customer, setCustomer] = useState<ICustomer | undefined>(
-    cart.customer,
-  );
-  const [products, setProducts] = useState<IProductCart[]>(cart.products || []);
+  const [customer, setCustomer] = useState<ICustomer | undefined>();
+  const [products, setProducts] = useState<IProductCart[]>([]);
   const [orderTentative, setOrderTentative] = useState();
-
-  const onChangeProduct = useCallback(
-    newProducts => {
-      setProducts(newProducts);
-      updateCart({products: newProducts});
-    },
-    [updateCart],
-  );
-  const onChangeCustomer = useCallback(
-    newCustomer => {
-      setCustomer(newCustomer);
-      updateCart({customer: newCustomer});
-    },
-    [updateCart],
-  );
 
   const onChangeOrderId = newOrderId => {
     setOrderTentative(newOrderId);
+  };
+
+  const clearOrder = () => {
+    setProducts([]);
+    setCustomer(undefined);
+    setOrderTentative(undefined);
   };
 
   return (
@@ -62,9 +45,10 @@ export const CartProvider = memo(({children}: {children: ReactNode}) => {
         customer,
         products,
         orderTentative,
-        setProducts: onChangeProduct,
-        setCustomer: onChangeCustomer,
+        setProducts,
+        setCustomer,
         setOrderTentative: onChangeOrderId,
+        clearOrder,
       }}>
       {children}
     </CartContext.Provider>

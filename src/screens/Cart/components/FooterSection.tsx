@@ -44,8 +44,6 @@ const FooterSection = memo(() => {
   const {orderTentative, products, customer, setProducts, setCustomer} =
     useContext(CartContext);
 
-  console.log('orderTentative', products);
-
   const disabled = !(products.length > 0);
   const createSuccess = useCallback(order => {
     order && Actions.push('confirm_order_screen', {order});
@@ -63,11 +61,7 @@ const FooterSection = memo(() => {
   };
 
   const onCreateOrder = useCallback(
-    async (type: 'hold' | 'create' | 'edit') => {
-      console.log('type', type);
-
-      global.showLoading();
-
+    async (type: 'create' | 'edit' | 'holdCreate' | 'holdEdit') => {
       const orderItems: IOrderItems[] = products.map(
         ({product, config, count}) => {
           return {
@@ -83,15 +77,18 @@ const FooterSection = memo(() => {
         customerPartyId: customer ? customer.partyId : '_NA_',
         productStoreId: Fetch.current_channel?.productStoreId || '',
         orderItems: orderItems,
-        ...(type !== 'create' && {orderId: orderTentative}),
+        ...((type === 'edit' || type === 'holdEdit') && {
+          orderId: orderTentative,
+        }),
       };
 
-      console.log('params', params);
-
+      global.showLoading();
       const result =
-        type === 'create' ? await createOrder(params) : await editOrder(params);
+        type === 'create' || type === 'holdCreate'
+          ? await createOrder(params)
+          : await editOrder(params);
       if (result) {
-        type === 'hold'
+        type === 'holdCreate' || type === 'holdEdit'
           ? onHoldOrder(result.orderId)
           : createSuccess(result.orderDetail);
       } else {
@@ -120,10 +117,12 @@ const FooterSection = memo(() => {
       textCancel: 'Hủy',
       textNext: 'Giữ đơn',
       onNext: () => {
-        onCreateOrder('hold');
+        orderTentative
+          ? onCreateOrder('holdEdit')
+          : onCreateOrder('holdCreate');
       },
     });
-  }, [orderTentative]);
+  }, [orderTentative, products, customer]);
 
   return (
     <Wrapper>

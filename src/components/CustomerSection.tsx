@@ -44,7 +44,7 @@ const CustomerSection = memo(
     contactNumber = false,
   }: {
     customer: ICustomer;
-    contactNumber: boolean;
+    contactNumber?: boolean;
   }) => {
     return (
       <Wrapper>

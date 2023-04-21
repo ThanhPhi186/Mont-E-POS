@@ -69,12 +69,12 @@ const ChannelText = styled.Text`
   font-size: 14px;
   line-height: 20px;
   color: #ffffff;
-  margin-right: 4px; ;
+  margin-right: 4px;
 `;
 
 const WrapperModal = styled.View`
   padding: 0px 16px;
-  height: ${height * 0.6}; ;
+  height: ${height * 0.6};
 `;
 
 const SDynamicInput = styled(DynamicInput)`
@@ -102,7 +102,6 @@ const UserSection = memo(function () {
 
   const onCloseTerminate = async () => {
     const response = await closeSalesShift(money.replace(/,/g, ''));
-    console.log('onCloseTerminate', response);
 
     modalCLoseRef.current.close();
 

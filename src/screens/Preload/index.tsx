@@ -37,7 +37,6 @@ const TextVersion = styled.Text`
 
 const Preload = memo(() => {
   const init = useCallback(async () => {
-    console.log('start init');
     const localData = await AsyncStorage.multiGet([
       STORE_KEY.CURRENT_DOMAIN,
       STORE_KEY.COMPANY_CODE,

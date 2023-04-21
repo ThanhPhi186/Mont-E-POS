@@ -10,10 +10,8 @@ import {
   getMaximumDiscount,
   holdOrder,
 } from '@/store/order/api';
-import {useCart} from '@/store/order/hook';
 import {IOrderDetail} from '@/store/order/type';
 import {getLocaleNumber} from '@/utils/convertString';
-import Emitter from '@/utils/Emitter';
 import React, {
   memo,
   useCallback,
@@ -79,7 +77,7 @@ const Column = styled.View`
 
 const WrapperModal = styled.View`
   padding: 0px 16px;
-  height: ${height * 0.8}; ;
+  height: ${height * 0.8};
 `;
 
 const SDynamicInput = styled(DynamicInput)`
@@ -115,6 +113,9 @@ const ConfirmFooter = memo(
     promo: number;
     order: IOrderDetail;
   }) => {
+    const {setProducts, setCustomer, setOrderTentative, clearOrder} =
+      useContext(CartContext);
+
     const [money, setMoney] = useState('0');
     const [backAmount, setBackAmount] = useState('0');
     const [discount, setDiscount] = useState('0');
@@ -154,7 +155,7 @@ const ConfirmFooter = memo(
       modalSelectRef.current.close();
       if (!result?.orderCompleted) return;
       global.showMessage('Tạo đơn thành công');
-      Emitter.send(Emitter.CLEAR_CART);
+      clearOrder();
       Actions.pop();
     }, [orderId, order, money]);
 
@@ -172,7 +173,6 @@ const ConfirmFooter = memo(
         modalDiscountRef.current.close();
         if (resAddDiscount) {
           const resOrderDetail = await fetchOrderDetail(orderId);
-          console.log('resOrderDetail', resOrderDetail);
           resOrderDetail && Actions.refresh({order: resOrderDetail});
         }
       }
@@ -184,7 +184,7 @@ const ConfirmFooter = memo(
       global.hideLoading();
       if (heldOrder) {
         global.showMessage('Đơn hàng được giữ thành công');
-        Emitter.send(Emitter.CLEAR_CART);
+        clearOrder();
         Actions.pop();
       }
     };

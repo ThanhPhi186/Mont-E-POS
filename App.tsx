@@ -9,6 +9,7 @@ import AppMessage from '@/components/GlobalModal/AppMessage';
 import '@/global';
 import AlertPopup from '@/components/GlobalModal/AlertPopup';
 import VersionCheck from 'react-native-version-check';
+import {CartProvider} from '@/screens/Cart/CartConext';
 
 function AppHookContent() {
   return (
@@ -69,7 +70,9 @@ const App = () => {
   return (
     <Provider store={store}>
       <ThemeProvider>
-        <AppHookContent />
+        <CartProvider>
+          <AppHookContent />
+        </CartProvider>
       </ThemeProvider>
     </Provider>
   );

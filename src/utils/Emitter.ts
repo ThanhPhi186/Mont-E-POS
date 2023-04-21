@@ -9,7 +9,6 @@ const __emitter =
 
 export default {
   UPDATE_LIST_CUSTOMER: 'UPDATE_LIST_CUSTOMER',
-  CLEAR_CART: 'CLEAR_CART',
 
   send: (event: any, message?: any) => __emitter.emit(event, message),
   listen: (event: any, callback: any) =>
