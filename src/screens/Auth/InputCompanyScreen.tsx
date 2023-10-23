@@ -101,7 +101,7 @@ const InputCompanyScreen = memo(() => {
                 }}
               />
               <SSubmitButton
-                disabled={!(code.length > 3 && !message)}
+                disabled={!!message}
                 text="Tiếp theo"
                 onPress={onSubmit}
               />
