@@ -94,6 +94,11 @@ const convertStatus: Record<
     borderColor: Theme.green,
     label: 'Đã hoàn thành',
   },
+  ReturnCancelled: {
+    background: 'rgba(52, 199, 89, 0.1)',
+    borderColor: Theme.error,
+    label: 'Đã Hủy',
+  },
 };
 
 const OrderItem = memo(({item}: {item: IReturnOrderListItem}) => {

@@ -1,10 +1,15 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import {
   Platform,
   StatusBar,
   StyleSheet,
   TouchableOpacity,
-  PixelRatio,
   KeyboardAvoidingView,
   ScrollView,
 } from 'react-native';
@@ -12,18 +17,19 @@ import {Actions} from 'react-native-router-flux';
 import styled from 'styled-components/native';
 import Icons from '@/Icons';
 import Theme from '@/Colors';
-import {CartContext, CartProvider} from '../Cart/CartConext';
+import {CartContext} from '../Cart/CartConext';
 import {fetchListProduct} from '@/store/product/api';
 import {getLocaleNumber} from '@/utils/convertString';
 import {IFullProduct} from '@/store/product/type';
 import {
+  Code,
+  useCameraDevice,
+  useCodeScanner,
   Camera,
-  sortFormats,
-  useCameraDevices,
 } from 'react-native-vision-camera';
-import {useScanBarcodes, BarcodeFormat} from 'vision-camera-code-scanner';
 import {_, height, width} from '@/global';
 import BarcodeView from './BarcodeView';
+import {Text} from 'react-native';
 
 const Row = styled.View`
   flex-direction: row;
@@ -136,27 +142,24 @@ const SView = styled.View`
   flex: 1;
 `;
 
+const BtnClear = styled.TouchableOpacity`
+  width: 48px;
+  height: 48px;
+  background: ${Theme.error};
+  border-radius: 12px;
+  align-items: center;
+  justify-content: center;
+`;
+
 const QRScan = () => {
   const [hasPermission, setHasPermission] = useState(false);
-  const devices = useCameraDevices();
-  const device = devices.back;
-  const [pixelRatio] = useState(PixelRatio.get());
-  const [format, setFormat] = useState<any>(
-    device?.formats.sort(sortFormats)[0],
-  );
-
-  const [frameProcessor, barcodes] = useScanBarcodes(
-    [BarcodeFormat.ALL_FORMATS],
-    {
-      checkInverted: true,
-    },
-  );
+  const device = useCameraDevice('back');
 
   const {products, setProducts} = useContext(CartContext);
 
-  const [lastBarCode, setLastBarCode] = useState<string | undefined>();
   const [productQR, setProductQr] = useState<IFullProduct>();
   const [tempCount, setTempCount] = useState<number>(1);
+  const [startScan, setStartScan] = useState(false);
   const scrollRef = useRef<ScrollView>(null);
 
   const getScanData = async qrCode => {
@@ -175,22 +178,23 @@ const QRScan = () => {
   };
 
   const reset = () => {
-    setLastBarCode('');
+    setStartScan(false);
     setProductQr(undefined);
+    setTempCount(1);
   };
 
   const selectProduct = () => {
     reset();
     const indexExisted = products.findIndex(
       p =>
-        p.product.productId === productQR?.productId &&
-        p.config.quantityUomId === productQR.configs?.[0].quantityUomId,
+        p?.product?.productId === productQR?.productId &&
+        p?.config?.quantityUomId === productQR.configs?.[0].quantityUomId,
     );
     const findExistItem = indexExisted !== -1 ? products[indexExisted] : null;
     const item = {
       product: productQR,
       config: productQR?.configs?.[0],
-      count: !findExistItem ? 1 : findExistItem.count + 1,
+      count: !findExistItem ? tempCount : findExistItem.count + tempCount,
     };
     const newList = [...products, item];
 
@@ -211,57 +215,46 @@ const QRScan = () => {
     }
   };
 
+  const onScanQr = () => {
+    setStartScan(true);
+  };
+
+  const onCodeScanned = useCallback(
+    (codes: Code[]) => {
+      if (codes.length > 0) {
+        const code = codes[0]?.value;
+        setStartScan(false);
+        startScan && getScanData(code);
+      } else {
+        global.showMessage(
+          'Chưa nhận dạng được barcode, vui lòng đặt lại sản phẩm vào chính giữa màn hình',
+        );
+      }
+    },
+    [startScan],
+  );
+
+  const codeScanner = useCodeScanner({
+    codeTypes: ['code-128', 'code-39', 'code-93', 'codabar', 'ean-13', 'ean-8'],
+    onCodeScanned: onCodeScanned,
+  });
+
   useEffect(() => {
     (async () => {
       let status = await Camera.getCameraPermissionStatus();
-      if (status === 'not-determined') {
+      if (['not-determined', 'denied', 'restricted'].includes(status)) {
         status = await Camera.requestCameraPermission();
       }
-      setHasPermission(status === 'authorized');
+      setHasPermission(status === 'granted');
     })();
   }, []);
 
-  useEffect(() => {
-    if (barcodes?.length > 0) {
-      const screenWidth = width * pixelRatio;
-      const screenHeight = height * pixelRatio;
-      const targetWidth = width * 0.8;
-      const targetHeight = height * 0.35;
-      const videoWidth = screenWidth;
-      const videoHeight = (screenWidth / targetWidth) * targetHeight;
-      const yMin = screenHeight - videoHeight;
-      const xMin = (screenWidth - videoWidth) / 2;
-      const xMax = xMin + videoWidth;
-      const yMax = yMin + videoHeight;
-
-      const barcode = barcodes[0];
-      if (barcode.cornerPoints && barcode.cornerPoints.length >= 4) {
-        const [topLeft, topRight, bottomRight, bottomLeft] =
-          barcode.cornerPoints;
-
-        const centerX =
-          (topLeft.x + topRight.x + bottomRight.x + bottomLeft.x) / 4;
-        const centerY =
-          (topLeft.y + topRight.y + bottomRight.y + bottomLeft.y) / 4;
-
-        if (
-          centerX >= xMin &&
-          centerX <= xMax &&
-          centerY >= yMin &&
-          centerY <= yMax
-        ) {
-          const code = barcode?.displayValue;
-          setLastBarCode(code);
-          code !== lastBarCode && getScanData(code);
-        }
-      }
-    }
-  }, [barcodes]);
-
-  useEffect(() => setFormat(device?.formats.sort(sortFormats)[0]), [device]);
-
   return (
-    <KeyboardAvoidingView behavior="padding" style={{flex: 1}}>
+    <KeyboardAvoidingView
+      behavior="padding"
+      style={{
+        flex: 1,
+      }}>
       <ScrollView
         keyboardShouldPersistTaps="handled"
         onScroll={handleScroll}
@@ -269,19 +262,26 @@ const QRScan = () => {
         {Platform.OS === 'android' && (
           <StatusBar backgroundColor="transparent" translucent={true} />
         )}
-        {device != null && hasPermission && (
+        {device != null && hasPermission ? (
           <Camera
-            style={styles.camera}
+            style={StyleSheet.absoluteFill}
             device={device}
             isActive={true}
-            format={format}
-            frameProcessor={frameProcessor}
-            frameProcessorFps={5}
-            zoom={device?.neutralZoom ?? 1}
+            codeScanner={codeScanner}
+            // torch={'on'}
+            enableZoomGesture={true}
           />
+        ) : (
+          <Text style={{color: 'white'}}>
+            Có lỗi xảy ra khi cấp quyền camera
+          </Text>
         )}
-        {(!_.isEmpty(products) || productQR) && (
-          <SFooter>
+        <SFooter>
+          {productQR ? (
+            <BtnClear onPress={reset}>
+              <Image source={Icons.icClose} style={{tintColor: 'white'}} />
+            </BtnClear>
+          ) : (
             <CartWrapper
               onPress={() => {
                 Actions.push('create_order', {productFromQr: true});
@@ -293,52 +293,58 @@ const QRScan = () => {
                 </CartCountView>
               )}
             </CartWrapper>
-            {productQR ? (
-              <ProductWrapper>
-                <TxtNameProduct numberOfLines={1}>
-                  {productQR.productName}
-                </TxtNameProduct>
-                <SWrapperChangeCount>
-                  <TxtPrice>
-                    {getLocaleNumber(
-                      productQR.configs?.[0]
-                        ? productQR.configs?.[0].priceOut.price +
-                            productQR.configs?.[0].priceOut.taxAmount
-                        : 0,
-                    )}
-                    đ
-                  </TxtPrice>
-                  <Row>
-                    <Button
-                      hitSlop={{top: 15, left: 15, bottom: 15}}
-                      onPress={() =>
-                        tempCount > 1 && setTempCount(tempCount - 1)
-                      }>
-                      <IconCount source={Icons.icCountReduce} />
-                    </Button>
-                    <CountInput
-                      hitSlop={{top: 15, bottom: 15}}
-                      selectTextOnFocus
-                      value={tempCount + ''}
-                      keyboardType="numeric"
-                      onChangeText={onChangeCountByInput}
-                    />
-                    <Button
-                      hitSlop={{top: 15, right: 15, bottom: 15}}
-                      onPress={() => setTempCount(tempCount + 1)}>
-                      <IconCount source={Icons.icCountRaise} />
-                    </Button>
-                  </Row>
-                </SWrapperChangeCount>
-              </ProductWrapper>
-            ) : (
-              <SView />
-            )}
-            <BtnSelect disabled={!productQR} onPress={selectProduct}>
+          )}
+          {productQR ? (
+            <ProductWrapper>
+              <TxtNameProduct numberOfLines={1}>
+                {productQR.productName}
+              </TxtNameProduct>
+              <SWrapperChangeCount>
+                <TxtPrice>
+                  {getLocaleNumber(
+                    productQR.configs?.[0]
+                      ? productQR.configs?.[0].priceOut.price +
+                          productQR.configs?.[0].priceOut.taxAmount
+                      : 0,
+                  )}
+                  đ
+                </TxtPrice>
+                <Row>
+                  <Button
+                    hitSlop={{top: 15, left: 15, bottom: 15}}
+                    onPress={() =>
+                      tempCount > 1 && setTempCount(tempCount - 1)
+                    }>
+                    <IconCount source={Icons.icCountReduce} />
+                  </Button>
+                  <CountInput
+                    hitSlop={{top: 15, bottom: 15}}
+                    selectTextOnFocus
+                    value={tempCount + ''}
+                    keyboardType="numeric"
+                    onChangeText={onChangeCountByInput}
+                  />
+                  <Button
+                    hitSlop={{top: 15, right: 15, bottom: 15}}
+                    onPress={() => setTempCount(tempCount + 1)}>
+                    <IconCount source={Icons.icCountRaise} />
+                  </Button>
+                </Row>
+              </SWrapperChangeCount>
+            </ProductWrapper>
+          ) : (
+            <SView />
+          )}
+          {!productQR ? (
+            <BtnSelect onPress={onScanQr}>
+              <Image source={Icons.icon_qr} />
+            </BtnSelect>
+          ) : (
+            <BtnSelect onPress={selectProduct}>
               <Image source={Icons.icSelectedWhite} />
             </BtnSelect>
-          </SFooter>
-        )}
+          )}
+        </SFooter>
         <SHeader>
           <TouchableOpacity onPress={() => Actions.pop()}>
             <Image source={Icons.icBack} />
@@ -364,13 +370,17 @@ export default QRScanScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#232323',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
-  camera: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
+  title: {
+    color: 'white',
+    width: width * 0.7,
+    textAlign: 'center',
+    marginTop: 12,
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });

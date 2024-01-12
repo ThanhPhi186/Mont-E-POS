@@ -11,10 +11,10 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		39F18753CE7EDF98915041A1 /* libPods-montepos-monteposTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DF7FAA6BCB6AF672C181F574 /* libPods-montepos-monteposTests.a */; };
-		5EC1F7888C4E55CBAE8BC888 /* libPods-montepos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 05A2DEA2C990E2427067958B /* libPods-montepos.a */; };
+		1C45F6A1B6F50828BC360D25 /* libPods-montepos-monteposTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B436876CEA0636765AA4797 /* libPods-montepos-monteposTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		9ACDA119296E604E0019F570 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACDA118296E604E0019F570 /* File.swift */; };
+		FE4DBB551E6124214AD30E2B /* libPods-montepos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 207EE1EBA9967C3EF193E85F /* libPods-montepos.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,22 +31,22 @@
 		00E356EE1AD99517003FC87E /* monteposTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = monteposTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* monteposTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = monteposTests.m; sourceTree = "<group>"; };
-		05A2DEA2C990E2427067958B /* libPods-montepos.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-montepos.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07F961A680F5B00A75B9A /* montepos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = montepos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = montepos/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = montepos/AppDelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = montepos/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = montepos/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = montepos/main.m; sourceTree = "<group>"; };
-		6EC6F30E99DBDD8EC0EA419E /* Pods-montepos.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-montepos.release.xcconfig"; path = "Target Support Files/Pods-montepos/Pods-montepos.release.xcconfig"; sourceTree = "<group>"; };
+		207EE1EBA9967C3EF193E85F /* libPods-montepos.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-montepos.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B436876CEA0636765AA4797 /* libPods-montepos-monteposTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-montepos-monteposTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3EDA03D009E093AEC79B4A9E /* Pods-montepos.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-montepos.release.xcconfig"; path = "Target Support Files/Pods-montepos/Pods-montepos.release.xcconfig"; sourceTree = "<group>"; };
+		55E8D574F9989630EDB794BB /* Pods-montepos-monteposTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-montepos-monteposTests.debug.xcconfig"; path = "Target Support Files/Pods-montepos-monteposTests/Pods-montepos-monteposTests.debug.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = montepos/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		93725F0471E87780356021A9 /* Pods-montepos.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-montepos.debug.xcconfig"; path = "Target Support Files/Pods-montepos/Pods-montepos.debug.xcconfig"; sourceTree = "<group>"; };
 		9ACDA117296E604E0019F570 /* montepos-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "montepos-Bridging-Header.h"; sourceTree = "<group>"; };
 		9ACDA118296E604E0019F570 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
-		AC997674A3CF83D5018A18AF /* Pods-montepos-monteposTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-montepos-monteposTests.debug.xcconfig"; path = "Target Support Files/Pods-montepos-monteposTests/Pods-montepos-monteposTests.debug.xcconfig"; sourceTree = "<group>"; };
-		CA889891DC5FADF4BF7F1007 /* Pods-montepos-monteposTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-montepos-monteposTests.release.xcconfig"; path = "Target Support Files/Pods-montepos-monteposTests/Pods-montepos-monteposTests.release.xcconfig"; sourceTree = "<group>"; };
-		DF7FAA6BCB6AF672C181F574 /* libPods-montepos-monteposTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-montepos-monteposTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ECFD288E42059CA41528A29B /* Pods-montepos-monteposTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-montepos-monteposTests.release.xcconfig"; path = "Target Support Files/Pods-montepos-monteposTests/Pods-montepos-monteposTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		F14D987A432F29A5566A9AC2 /* Pods-montepos.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-montepos.debug.xcconfig"; path = "Target Support Files/Pods-montepos/Pods-montepos.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,7 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				39F18753CE7EDF98915041A1 /* libPods-montepos-monteposTests.a in Frameworks */,
+				1C45F6A1B6F50828BC360D25 /* libPods-montepos-monteposTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,7 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5EC1F7888C4E55CBAE8BC888 /* libPods-montepos.a in Frameworks */,
+				FE4DBB551E6124214AD30E2B /* libPods-montepos.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,8 +105,8 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				05A2DEA2C990E2427067958B /* libPods-montepos.a */,
-				DF7FAA6BCB6AF672C181F574 /* libPods-montepos-monteposTests.a */,
+				207EE1EBA9967C3EF193E85F /* libPods-montepos.a */,
+				3B436876CEA0636765AA4797 /* libPods-montepos-monteposTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -145,10 +145,10 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				93725F0471E87780356021A9 /* Pods-montepos.debug.xcconfig */,
-				6EC6F30E99DBDD8EC0EA419E /* Pods-montepos.release.xcconfig */,
-				AC997674A3CF83D5018A18AF /* Pods-montepos-monteposTests.debug.xcconfig */,
-				CA889891DC5FADF4BF7F1007 /* Pods-montepos-monteposTests.release.xcconfig */,
+				F14D987A432F29A5566A9AC2 /* Pods-montepos.debug.xcconfig */,
+				3EDA03D009E093AEC79B4A9E /* Pods-montepos.release.xcconfig */,
+				55E8D574F9989630EDB794BB /* Pods-montepos-monteposTests.debug.xcconfig */,
+				ECFD288E42059CA41528A29B /* Pods-montepos-monteposTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -160,12 +160,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "monteposTests" */;
 			buildPhases = (
-				F4B18AB5B13BA87E71B9C007 /* [CP] Check Pods Manifest.lock */,
+				CCB38B987EC8E902BE00A72F /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				B6E650C397E160CD230EAB7A /* [CP] Embed Pods Frameworks */,
-				029AE07FCB0D48D08861DEA3 /* [CP] Copy Pods Resources */,
+				3BDDD8079456BDFD02BECE4A /* [CP] Embed Pods Frameworks */,
+				BED3F2E992513E7CC3446EC0 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -181,14 +181,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "montepos" */;
 			buildPhases = (
-				798B7591A2D62F8B1FAFDDDE /* [CP] Check Pods Manifest.lock */,
+				487DA65309411B39B0312F4D /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				2AF399E4CF23012B28A28405 /* [CP] Embed Pods Frameworks */,
-				146F8C58DDE60772C4C3B376 /* [CP] Copy Pods Resources */,
+				61CF4409A0D32F4C8D1EF36E /* [CP] Embed Pods Frameworks */,
+				CCF704F83D584FCBBD7BFE31 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -271,58 +271,24 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
 		};
-		029AE07FCB0D48D08861DEA3 /* [CP] Copy Pods Resources */ = {
+		3BDDD8079456BDFD02BECE4A /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-montepos-monteposTests/Pods-montepos-monteposTests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-montepos-monteposTests/Pods-montepos-monteposTests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-montepos-monteposTests/Pods-montepos-monteposTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		146F8C58DDE60772C4C3B376 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-montepos/Pods-montepos-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-montepos/Pods-montepos-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-montepos/Pods-montepos-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		2AF399E4CF23012B28A28405 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-montepos/Pods-montepos-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-montepos-monteposTests/Pods-montepos-monteposTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-montepos/Pods-montepos-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-montepos-monteposTests/Pods-montepos-monteposTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-montepos/Pods-montepos-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-montepos-monteposTests/Pods-montepos-monteposTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		798B7591A2D62F8B1FAFDDDE /* [CP] Check Pods Manifest.lock */ = {
+		487DA65309411B39B0312F4D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -344,24 +310,41 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B6E650C397E160CD230EAB7A /* [CP] Embed Pods Frameworks */ = {
+		61CF4409A0D32F4C8D1EF36E /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-montepos-monteposTests/Pods-montepos-monteposTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-montepos/Pods-montepos-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-montepos-monteposTests/Pods-montepos-monteposTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-montepos/Pods-montepos-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-montepos-monteposTests/Pods-montepos-monteposTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-montepos/Pods-montepos-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F4B18AB5B13BA87E71B9C007 /* [CP] Check Pods Manifest.lock */ = {
+		BED3F2E992513E7CC3446EC0 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-montepos-monteposTests/Pods-montepos-monteposTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-montepos-monteposTests/Pods-montepos-monteposTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-montepos-monteposTests/Pods-montepos-monteposTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CCB38B987EC8E902BE00A72F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -381,6 +364,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CCF704F83D584FCBBD7BFE31 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-montepos/Pods-montepos-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-montepos/Pods-montepos-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-montepos/Pods-montepos-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -436,7 +436,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AC997674A3CF83D5018A18AF /* Pods-montepos-monteposTests.debug.xcconfig */;
+			baseConfigurationReference = 55E8D574F9989630EDB794BB /* Pods-montepos-monteposTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -464,7 +464,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CA889891DC5FADF4BF7F1007 /* Pods-montepos-monteposTests.release.xcconfig */;
+			baseConfigurationReference = ECFD288E42059CA41528A29B /* Pods-montepos-monteposTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -489,7 +489,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 93725F0471E87780356021A9 /* Pods-montepos.debug.xcconfig */;
+			baseConfigurationReference = F14D987A432F29A5566A9AC2 /* Pods-montepos.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -504,7 +504,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = 1.6;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -526,7 +526,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6EC6F30E99DBDD8EC0EA419E /* Pods-montepos.release.xcconfig */;
+			baseConfigurationReference = 3EDA03D009E093AEC79B4A9E /* Pods-montepos.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -540,7 +540,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = 1.6;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

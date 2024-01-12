@@ -38,7 +38,7 @@
     "react-native-modal": "^13.0.1",
     "react-native-modal-datetime-picker": "^14.0.0",
     "react-native-permissions": "^3.3.1",
-    "react-native-reanimated": "^2.13.0",
+    "react-native-reanimated": "^3.6.1",
     "react-native-router-flux": "^4.2.0",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-safe-area-view": "^1.1.1",
@@ -48,14 +48,13 @@
     "react-native-splash-screen": "^3.2.0",
     "react-native-svg": "^12.1.0",
     "react-native-version-check": "^3.4.3",
-    "react-native-vision-camera": "^2.15.2",
+    "react-native-vision-camera": "^3.7.0",
     "react-redux": "^7.2.0",
     "react-use": "^13.27.0",
     "redux": "^4.0.5",
     "redux-devtools": "^3.5.0",
     "styled-components": "^5.3.6",
-    "typesafe-actions": "^5.1.0",
-    "vision-camera-code-scanner": "^0.2.0"
+    "typesafe-actions": "^5.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

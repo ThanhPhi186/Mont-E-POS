@@ -11,6 +11,7 @@ import styled from 'styled-components/native';
 import OrderInformation from './components/OrderInformation';
 import ProductSelectReturn from './components/ProductSelectReturn';
 import {OrderContext, OrderProvider} from './OrderContext';
+import {getLocaleNumber} from '@/utils/convertString';
 
 const SScrollView = styled.ScrollView`
   flex: 1;
@@ -30,6 +31,17 @@ const TotalItem = styled.Text`
 `;
 
 const SButtonBottom = styled(ButtonBottom)``;
+const SInfoPayment = styled.View`
+  padding: 12px 24px;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+const Label = styled.Text``;
+const SGrandTotal = styled.Text`
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 22px;
+`;
 
 const Container = memo(({order}: {order: IOrderDetail}) => {
   const {productReturn, setProductReturn} = useContext(OrderContext);
@@ -37,7 +49,7 @@ const Container = memo(({order}: {order: IOrderDetail}) => {
   const onCountChange = useCallback(
     (idxProduct: number, newCount: number) => {
       const item = {...productReturn[idxProduct]};
-      item.alternativeQuantity = newCount;
+      item.countReturn = newCount;
       productReturn[idxProduct] = {...item};
       setProductReturn([...productReturn]);
     },
@@ -53,7 +65,7 @@ const Container = memo(({order}: {order: IOrderDetail}) => {
         productId: elm.productId,
         returnReasonEnumId: 'RrsnDidNotWant',
         alternativeReturnQuantityUomId: elm.alternativeQuantityUomId,
-        alternativeReturnQuantity: elm.alternativeQuantity,
+        alternativeReturnQuantity: elm.countReturn,
       }));
 
     const params = {
@@ -68,12 +80,19 @@ const Container = memo(({order}: {order: IOrderDetail}) => {
       Actions.pop();
     }
   };
+  const calculatePrice = () => {
+    return getLocaleNumber(
+      productReturn.reduce((result, item) => {
+        return result + item.alternativeUnitAmount * item.countReturn;
+      }, 0),
+    );
+  };
 
   useEffect(() => {
     const newArray = [...order.productItems].map(elm => ({
       ...elm,
       checked: false,
-      baseQuantity: elm.alternativeQuantity,
+      countReturn: 0,
     }));
 
     setProductReturn(newArray);
@@ -101,7 +120,7 @@ const Container = memo(({order}: {order: IOrderDetail}) => {
             key={item.pseudoId}
             onCountChange={newCount => onCountChange(index, newCount)}
             count={item.alternativeQuantity}
-            baseCount={item.baseQuantity}
+            countReturnable={item.alternativeReturnableQuantity}
             productName={item.itemDescription}
             quantityUomDesc={item.alternativeQuantityUomId}
             price={item.alternativeUnitAmountVAT}
@@ -110,6 +129,10 @@ const Container = memo(({order}: {order: IOrderDetail}) => {
           />
         ))}
       </SScrollView>
+      <SInfoPayment>
+        <Label>Tổng tiền</Label>
+        <SGrandTotal>{calculatePrice()} đ</SGrandTotal>
+      </SInfoPayment>
       <SButtonBottom
         disabled={!productReturn.some(elm => elm.checked !== false)}
         text="Hoàn tất"

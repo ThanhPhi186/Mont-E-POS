@@ -3,7 +3,6 @@ import Icons from '@/Icons';
 import SVGIcon from '@/Icons/SVGIcon';
 import {getLocaleNumber} from '@/utils/convertString';
 import React, {memo, useCallback, useContext, useEffect, useState} from 'react';
-
 import styled from 'styled-components/native';
 import {OrderContext} from '../OrderContext';
 
@@ -19,13 +18,14 @@ const ContainerItem = styled(Row)`
 const ContainerFooter = styled(Row)`
   justify-content: space-between;
   width: 100%;
-  margin-top: 8px;
+  margin-top: 4px;
 `;
 
 const ContainerCount = styled(Row)`
-  margin-top: 10;
-  justify-content: space-between;
-  width: 100%;
+  /* justify-content: space-between; */
+  /* width: 100%; */
+  margin-top: 4px;
+  height: 24px;
 `;
 
 const WrapperProduct = styled.View`
@@ -67,15 +67,6 @@ const PropertyText = styled.Text`
   color: #1c1c1e;
 `;
 
-const Icon = styled.Image`
-  margin-top: -2px;
-  margin-left: 4px;
-`;
-
-const Footer = styled.View`
-  margin-top: 8px;
-`;
-
 const Price = styled.Text`
   font-weight: 700;
   font-size: 16px;
@@ -101,83 +92,12 @@ const CountText = styled.Text`
 const CountInput = styled.TextInput`
   width: 60px;
   text-align: center;
-  padding: 0;
   background-color: transparent;
 `;
 
-const SButtonChecked = styled(ButtonChecked)`
-  margin-right: 16px;
+const ViewChecked = styled.View`
+  width: 28px;
 `;
-
-const FooterSection = memo(
-  ({
-    edited,
-    count,
-    baseCount,
-    onCountChange,
-  }: {
-    edited: boolean;
-    count: number;
-    baseCount: number;
-    onCountChange?: (count: number) => void;
-  }) => {
-    const [tempCount, setTempCount] = useState<number>(1);
-
-    const onChangeCountByInput = useCallback((t: string) => {
-      if (!t) return setTempCount(0);
-      if (!/\d+$/g.test(t) || !!Number.isNaN(Number(t))) return;
-      if (Number(t) > baseCount) {
-        setTempCount(baseCount);
-        global.showMessage(
-          `Số lượng sản phẩm nhập vào không được lớn hơn ${baseCount}`,
-        );
-      } else {
-        setTempCount(Math.floor(Number(t)));
-      }
-    }, []);
-
-    const onBlurInput = useCallback(() => {
-      onCountChange?.(tempCount || 1);
-    }, [tempCount, onCountChange]);
-
-    useEffect(() => {
-      setTempCount(count || 1);
-    }, [count]);
-
-    return (
-      <Footer>
-        <ContainerCount>
-          {edited && typeof count === 'number' ? (
-            <Row>
-              <Button
-                hitSlop={{top: 15, left: 15, bottom: 15}}
-                // disabled={count < 2}
-                onPress={() => count > 1 && onCountChange(count - 1)}>
-                <IconCount source={Icons.icCountReduce} />
-              </Button>
-              <CountInput
-                hitSlop={{top: 15, bottom: 15}}
-                style={{width: 60}}
-                selectTextOnFocus
-                value={tempCount + ''}
-                onBlur={onBlurInput}
-                keyboardType="numeric"
-                onChangeText={onChangeCountByInput}
-              />
-              <Button
-                hitSlop={{top: 15, right: 15, bottom: 15}}
-                onPress={() => baseCount > count && onCountChange(count + 1)}>
-                <IconCount source={Icons.icCountRaise} />
-              </Button>
-            </Row>
-          ) : (
-            <CountText>Số lượng: {count || 0}</CountText>
-          )}
-        </ContainerCount>
-      </Footer>
-    );
-  },
-);
 
 const ProductSelectReturn = memo(
   ({
@@ -188,7 +108,7 @@ const ProductSelectReturn = memo(
     price,
     checked,
     index,
-    baseCount,
+    countReturnable,
   }: {
     onCountChange?: (count: number) => void;
     count: number;
@@ -197,24 +117,72 @@ const ProductSelectReturn = memo(
     price: number;
     checked: boolean;
     index: number;
-    baseCount: number;
+    countReturnable: number;
   }) => {
     const {productReturn, setProductReturn} = useContext(OrderContext);
+    const [tempCount, setTempCount] = useState<number>(1);
 
-    const onChecked = useCallback(() => {
-      const item = {...productReturn[index]};
-      item.checked = !item.checked;
-      productReturn[index] = {...item};
-      setProductReturn([...productReturn]);
-    }, [productReturn]);
+    const onChecked = useCallback(
+      isChecked => {
+        setTempCount(1);
+        const item = {...productReturn[index]};
+        item.checked = isChecked;
+        item.countReturn = isChecked ? 1 : 0;
+        productReturn[index] = {...item};
+        setProductReturn([...productReturn]);
+      },
+      [productReturn, tempCount],
+    );
+
+    const onChangeCountByInput = useCallback(
+      (t: string) => {
+        if (!t) return setTempCount(0);
+        if (!/\d+$/g.test(t) || !!Number.isNaN(Number(t))) return;
+        if (Number(t) > countReturnable) {
+          setTempCount(countReturnable);
+          global.showMessage(
+            `Số lượng sản phẩm nhập vào vượt quá số lượng có thể trả lại`,
+          );
+        } else {
+          setTempCount(Math.floor(Number(t)));
+        }
+      },
+      [tempCount],
+    );
+
+    const onBlurInput = useCallback(() => {
+      onCountChange?.(tempCount || 1);
+    }, [tempCount, onCountChange]);
+
+    const minusCount = () => {
+      if (tempCount > 1) {
+        onCountChange(tempCount - 1);
+        setTempCount(tempCount - 1);
+      }
+    };
+    const addCount = () => {
+      if (tempCount < countReturnable) {
+        onCountChange(tempCount + 1);
+        setTempCount(tempCount + 1);
+      } else {
+        global.showMessage(
+          `Số lượng sản phẩm nhập vào vượt quá số lượng có thể trả lại`,
+        );
+      }
+    };
 
     return (
       <ContainerItem>
-        <SButtonChecked
-          hitSlop={{top: 20, right: 20, left: 20, bottom: 20}}
-          value={checked}
-          onChangeStatus={onChecked}
-        />
+        {countReturnable ? (
+          <ButtonChecked
+            style={{marginRight: 12}}
+            hitSlop={{top: 20, right: 20, left: 20, bottom: 20}}
+            value={checked}
+            onChangeStatus={onChecked}
+          />
+        ) : (
+          <ViewChecked />
+        )}
         <WrapperProduct>
           <SVGIcon name="item-empty-image" />
           <Column>
@@ -222,14 +190,40 @@ const ProductSelectReturn = memo(
             <ButtonProperty>
               <PropertyText>{quantityUomDesc}</PropertyText>
             </ButtonProperty>
+            <ContainerCount>
+              {checked && typeof count === 'number' ? (
+                <Row>
+                  <CountText style={{marginRight: 12}}>Trả lại: </CountText>
+
+                  <Button
+                    hitSlop={{top: 15, left: 15, bottom: 15}}
+                    onPress={minusCount}>
+                    <IconCount source={Icons.icCountReduce} />
+                  </Button>
+                  <CountInput
+                    hitSlop={{top: 15, bottom: 15}}
+                    style={{width: 60}}
+                    selectTextOnFocus
+                    value={`${tempCount}`}
+                    onBlur={onBlurInput}
+                    keyboardType="numeric"
+                    onChangeText={onChangeCountByInput}
+                  />
+                  <Button
+                    hitSlop={{top: 15, right: 15, bottom: 15}}
+                    onPress={addCount}>
+                    <IconCount source={Icons.icCountRaise} />
+                  </Button>
+                </Row>
+              ) : (
+                <CountText>SL có thể trả: {countReturnable || 0}</CountText>
+              )}
+            </ContainerCount>
+
             <ContainerFooter>
               <Price>{getLocaleNumber(price ?? 0)} đ</Price>
-              <FooterSection
-                onCountChange={onCountChange}
-                count={count}
-                baseCount={baseCount}
-                edited={checked}
-              />
+
+              <CountText>Số lượng : {count || 0}</CountText>
             </ContainerFooter>
           </Column>
         </WrapperProduct>

@@ -21,4 +21,5 @@ export type TOrderType =
 export type TReturnType =
   | 'ReturnCreated'
   | 'ReturnApproved'
-  | 'ReturnCompleted';
+  | 'ReturnCompleted'
+  | 'ReturnCancelled';

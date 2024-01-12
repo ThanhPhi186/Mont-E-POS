@@ -1,12 +1,6 @@
-import Theme from '@/Colors';
-import {TOrderType} from '@/constants/variableConstant';
-import {ICustomer} from '@/store/customers/types';
-import {fetchOrderDetail} from '@/store/order/api';
-import {IOrderListItem} from '@/store/order/type';
 import {getLocaleNumber} from '@/utils/convertString';
-import moment from 'moment';
-import React, {memo, useCallback} from 'react';
-import {Actions} from 'react-native-router-flux';
+import React, {memo} from 'react';
+import {Text} from 'react-native';
 import styled from 'styled-components/native';
 
 const Wrapper = styled.View`
@@ -42,7 +36,6 @@ const Label = styled.Text`
 const Value = styled(NormalText)`
   color: #1c1c1e;
   margin-left: 8px;
-  flex: 1;
   text-align: right;
 `;
 
@@ -93,9 +86,7 @@ const OrderInformation = memo(
             <Value>{getLocaleNumber(vatTotal)}</Value>
           </Row>
           <Footer>
-            <Value style={{textAlign: 'left', marginLeft: 0}}>
-              Tổng tiền cần trả:
-            </Value>
+            <Value style={{textAlign: 'left', marginLeft: 0}}>Tổng đơn:</Value>
             <HighLight>{getLocaleNumber(grandTotal)}</HighLight>
           </Footer>
         </Container>

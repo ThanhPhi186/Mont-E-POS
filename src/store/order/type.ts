@@ -33,6 +33,7 @@ export interface IOrderProductItem {
   alternativeUnitAmount: number;
   alternativeUnitAmountVAT: number;
   alternativeQuantityUomDesc?: string;
+  alternativeReturnableQuantity: number;
   pseudoId: '';
   itemTypeEnumId: TItemTypeEnumId;
   alternativeQuantity: number;
@@ -45,6 +46,7 @@ export interface IOrderProductItem {
   checked?: boolean;
   baseQuantity?: number;
   configs: IProductConfig[];
+  countReturn: number;
 }
 
 export interface IOrderDetail {

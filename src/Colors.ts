@@ -1,7 +1,7 @@
 const Theme = {
   transparent: 'transparent',
   backgroundColor: '#F2F2F7',
-  error: '#FF6961',
+  error: '#FF3B30',
   blueMain: '#003089',
   blue2: '#007AFF',
   primaryDark: '#1c1c1e',
